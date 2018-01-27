@@ -1,0 +1,19 @@
+{
+	"manifest_version": 2,
+
+	"name": "Instagram Downloader",
+	"description": "This extension allows downloading of images from instagram",
+	"version": "1.0",
+	"browser_action": {
+		"default_title": "",
+		"default_icon": "icon.jpg",
+		"default_popup": "popup.html"
+	},
+	"update_url": "https://github.com/smjrifle/Insta-Download.git",
+	"content_scripts": [
+		{
+			"matches": ["https://www.instagram.com/*"],
+			"js": ["main.js"]
+		}
+	]
+}
