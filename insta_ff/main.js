@@ -81,59 +81,51 @@ if(enabled_insta_download == 'Enable') {
 
       var tagsArr = document.querySelectorAll('article > div');
       var tagsArr2 = document.querySelectorAll('article');
+      var tagsArr3 = document.querySelectorAll('section > div > div> section');
+      console.log(tagsArr3);
       for (var i = 0, len = tagsArr2.length; i < len; i++) {
-  // console.log(tagsArr2[i]);
-  var headertag = tagsArr2[i].getElementsByTagName('header');
-  var img_div = tagsArr2[i].getElementsByTagName('img');
-   if(img_div.length > 0) {
-       //tagsArr[i].removeChild('.download-btn');
-       // console.log(headertag[0]);
-       for(var j = 0; j < img_div.length; j++) {
-         var parent = img_div[j].parentElement.nodeName;
-         console.log(img_div[j].parentElement.nodeName);
-          if(img_div[j].src != '' && ! in_array(img_div[j].src, download_btn_array)) {
+        var img_div = tagsArr2[i].getElementsByTagName('img');
+        var video_div = tagsArr2[i].getElementsByTagName('video');
+      }
+      for (var i = 0, len = tagsArr2.length; i < len; i++) {
+        var headertag = tagsArr2[i].getElementsByTagName('header');
+        var img_div = tagsArr2[i].getElementsByTagName('img');
+        var video_div = tagsArr2[i].getElementsByTagName('video');
+        if(img_div.length > 0) {
+         for(var j = 0; j < img_div.length; j++) {
+           var parent = img_div[j].parentElement.nodeName;
+           console.log(img_div[j].parentElement.nodeName);
+           var imgName = (img_div[j].getAttribute('alt') != null) ? img_div[j].getAttribute('alt') : 'image' + j;
+           if(img_div[j].src != '' && ! in_array(img_div[j].src, download_btn_array)) {
             download_btn_array.push(img_div[j].src)
             var aTag = document.createElement('a');
             aTag.setAttribute('href', '#!');
             aTag.setAttribute('class', 'imgdownload');
-            aTag.setAttribute('data-name', img_div[j].getAttribute('alt') + '.jpg');
+            aTag.setAttribute('data-name', imgName + '.jpg');
             aTag.setAttribute('data-image', img_div[j].src);
             aTag.onclick = function(e) {
               e.preventDefault();
               forceDownload(this);
             }
-            var downloadText = 'Download ' + img_div[j].getAttribute('alt') + '      ';
+            var downloadText = 'Download ' + imgName + '      ';
             var t = document.createTextNode(downloadText);
             aTag.appendChild(t);
             var br = document.createElement("br");
             aTag.appendChild(br);
             aTag.style.marginBottom = "10px";
             aTag.style.overflow = "hidden";
+            aTag.style.marginLeft = "auto";
+            aTag.style.marginRight = "auto";
+            aTag.style.width = "95%";
             aTag.style.whiteSpace = "nowrap";
+            aTag.style.textOverflow = "ellipsis"
             tagsArr2[i].appendChild(aTag);
           //console.log(img_div[j].src);
-        }
-    }
-  }
 
-   // getElementsByClassName('imgdownload').onclick = function() {
-   //   forceDownload(this);
-   // }
 
- }
- var tagsArr = document.querySelectorAll('article > div');
- var tagsArr2 = document.querySelectorAll('article');
- for (var i = 0, len = tagsArr.length; i < len; i++) {
-  var img_div = tagsArr[i].getElementsByTagName('img');
-  if(img_div.length > 0) {
-       //tagsArr[i].removeChild('.download-btn');
-       // console.log(img_div)
-       for(var j = 0; j < img_div.length; j++) {
-        if(img_div[j].src != '' && ! in_array(img_div[j].src, img_array)) {
-          img_array.push(img_div[j].src)
           var aTag = document.createElement('a');
           aTag.setAttribute('href','#!');
-          aTag.setAttribute('data-name', img_div[j].getAttribute('alt') + '.jpg');
+          aTag.setAttribute('data-name', imgName + '.jpg');
           aTag.setAttribute('data-image', img_div[j].src);
           aTag.setAttribute('class','download-btn');
           tagsArr[i].appendChild(aTag);
@@ -144,17 +136,79 @@ if(enabled_insta_download == 'Enable') {
           imgtag.setAttribute('src',img_div[j].src);
           imgtag.setAttribute('height', '150px');
           aTag.appendChild(imgtag);
+          aTag.style.padding = "15px";
+          aTag.style.borderBottom = "1px solid #CCC";
+          aTag.style.marginBottom = "15px;";
           downloadbox.appendChild(aTag);
         }
       }
     }
-  }
+
+    if(video_div.length > 0) {
+       for(var j = 0; j < video_div.length; j++) {
+         var parent = video_div[j].parentElement.nodeName;
+         var imgName = (video_div[j].getAttribute('alt') != null) ? video_div[j].getAttribute('alt') : 'video' + j;
+         console.log(video_div[j].parentElement.nodeName);
+         if(video_div[j].src != '' && ! in_array(video_div[j].src, download_btn_array)) {
+          download_btn_array.push(video_div[j].src)
+          var aTag = document.createElement('a');
+          aTag.setAttribute('href', '#!');
+          aTag.setAttribute('class', 'videodownload');
+          aTag.setAttribute('data-name', imgName + '.mp4');
+          aTag.setAttribute('data-image', video_div[j].src);
+          aTag.onclick = function(e) {
+            e.preventDefault();
+            forceDownload(this);
+          }
+          var downloadText = 'Download ' + imgName + '      ';
+          var t = document.createTextNode(downloadText);
+          aTag.appendChild(t);
+          var br = document.createElement("br");
+          aTag.appendChild(br);
+          aTag.style.marginBottom = "10px";
+          aTag.style.overflow = "hidden";
+          aTag.style.marginLeft = "auto";
+          aTag.style.marginRight = "auto";
+          aTag.style.width = "95%";
+          aTag.style.whiteSpace = "nowrap";
+          aTag.style.textOverflow = "ellipsis"
+          tagsArr2[i].appendChild(aTag);
+
+
+          var aTag = document.createElement('a');
+          aTag.setAttribute('href','#!');
+          aTag.setAttribute('data-name', imgName + '.mp4');
+          aTag.setAttribute('data-image', video_div[j].src);
+          aTag.setAttribute('class','download-btn');
+          tagsArr[i].appendChild(aTag);
+          aTag.onclick = function(e) {
+            e.preventDefault();
+            forceDownload(this);
+          }
+          var vidtag = document.createElement('video');
+          vidtag.setAttribute('src',video_div[j].src);
+          vidtag.setAttribute('controls', true)
+          vidtag.setAttribute('height', '150px');
+          aTag.appendChild(vidtag);
+          var ptag = document.createElement('a');
+          var t = document.createTextNode("Download Video");
+          ptag.appendChild(t);
+          aTag.appendChild(ptag);
+          aTag.style.padding = "15px";
+          aTag.style.borderBottom = "1px solid #CCC";
+          aTag.style.marginBottom = "15px;";
+          downloadbox.appendChild(aTag);
+        }
+      }
+    }
+
+ }
 
 
 }, 5000);
-  }
+}
 
-  
+
 }
 
 var edb = document.getElementById('edbtn');
@@ -176,6 +230,7 @@ function enable_disable_fn(status) {
 function forceDownload(link){
   var url = link.getAttribute("data-image");
   var fileName = link.getAttribute("data-name");
+  if(fileName == null) {fileName = 'instaImage';}
   console.log(fileName);
   var xhr = new XMLHttpRequest();
   xhr.open("GET", url, true);
