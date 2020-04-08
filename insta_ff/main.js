@@ -37,6 +37,8 @@ if(enabled_insta_download == 'Enable') {
 
   var img_array = [];
   var download_btn_array = [];
+  var storyimg_array = [];
+  var storydownload_btn_array = [];
   var last_num;
   var fetch = 0;
   var downloadbox = document.createElement('div');
@@ -72,140 +74,255 @@ if(enabled_insta_download == 'Enable') {
   htag.appendChild(br);
   downloadbox.appendChild(htag2);
 
-  window.onload = function() {
-    myVar = setInterval(function() {
-      if(fetch == 0) {
-        downloadbox.removeChild(htag2);
-        fetch = 1;
+  window.onload = function() {myVar = setInterval(function() {
+    if(fetch == 0) {
+      downloadbox.removeChild(htag2);
+      fetch = 1;
+    }
+
+    var tagsArr = document.querySelectorAll('article > div');
+    var tagsArr2 = document.querySelectorAll('article');
+    var tagsArr3 = document.querySelectorAll('section > div > div> section');
+
+
+      //Story Download
+      for (var i = 0, len = tagsArr3.length; i < len; i++) {
+        var img_div = tagsArr3[i].getElementsByTagName('img');
+        var video_div = tagsArr3[i].getElementsByTagName('video');
+        if(img_div.length > 0) {
+          for(var j = 0; j < img_div.length; j++) {
+            var imgName = (img_div[j].getAttribute('alt') != null) ? img_div[j].getAttribute('alt') : 'image' + j;
+            var aTag = document.createElement('a');
+            if(img_div[j].src != '' && ! in_array(img_div[j].src, storyimg_array)) {
+              storyimg_array.push(img_div[j].src);
+
+              var aTag = document.createElement('a');
+              aTag.setAttribute('href', '#!');
+              aTag.setAttribute('class', 'imgdownload');
+              aTag.setAttribute('data-name', imgName + '.jpg');
+              aTag.setAttribute('data-image', img_div[j].src);
+              aTag.onclick = function(e) {
+                e.preventDefault();
+                forceDownload(this);
+              }
+              var downloadText = 'Download ' + imgName + '      ';
+              var t = document.createTextNode(downloadText);
+              aTag.appendChild(t);
+              var br = document.createElement("br");
+              aTag.appendChild(br);
+              aTag.style.marginBottom = "10px";
+              aTag.style.overflow = "hidden";
+              aTag.style.marginLeft = "auto";
+              aTag.style.marginRight = "auto";
+              aTag.style.width = "95%";
+              aTag.style.whiteSpace = "nowrap";
+              aTag.style.textOverflow = "ellipsis";
+              aTag.style.top = "0";
+              aTag.style.left = "0";
+              aTag.style.position = "left";
+              aTag.style.color = "#FFF";
+              tagsArr3[i].appendChild(aTag);
+
+              var aTag = document.createElement('a');
+              aTag.setAttribute('href','#!');
+              aTag.setAttribute('data-name', imgName + '.jpg');
+              aTag.setAttribute('data-image', img_div[j].src);
+              aTag.setAttribute('class','download-btn');
+              tagsArr3[i].appendChild(aTag);
+              aTag.onclick = function() {
+                forceDownload(this);
+              }
+              var imgtag = document.createElement('img');
+              imgtag.setAttribute('src',img_div[j].src);
+              imgtag.setAttribute('height', '150px');
+              aTag.appendChild(imgtag);
+              aTag.style.padding = "15px";
+              aTag.style.borderBottom = "1px solid #CCC";
+              aTag.style.marginBottom = "15px;";
+              downloadbox.appendChild(aTag);
+            }
+          }
+
+          if(video_div.length > 0) {
+            for(var j = 0; j < video_div.length; j++) {
+              var source = video_div[i].getElementsByTagName('source');
+              if(source[j].src != '' && ! in_array(source[0].src, storydownload_btn_array)) {
+                storydownload_btn_array.push(source[j].src);
+
+                var aTag = document.createElement('a');
+                aTag.setAttribute('href', '#!');
+                aTag.setAttribute('class', 'imgdownload');
+                aTag.setAttribute('data-name', imgName + '.jpg');
+                aTag.setAttribute('data-image', source[j].src);
+                aTag.onclick = function(e) {
+                  e.preventDefault();
+                  forceDownload(this);
+                }
+                var downloadText = 'Download ' + imgName + '      ';
+                var t = document.createTextNode(downloadText);
+                aTag.appendChild(t);
+                var br = document.createElement("br");
+                aTag.appendChild(br);
+                aTag.style.marginBottom = "10px";
+                aTag.style.overflow = "hidden";
+                aTag.style.marginLeft = "auto";
+                aTag.style.marginRight = "auto";
+                aTag.style.width = "95%";
+                aTag.style.whiteSpace = "nowrap";
+                aTag.style.textOverflow = "ellipsis";
+                aTag.style.top = "0";
+                aTag.style.left = "0";
+                aTag.style.position = "left";
+                aTag.style.color = "#FFF";
+                tagsArr3[i].appendChild(aTag);
+
+                var aTag = document.createElement('a');
+                aTag.setAttribute('href','#!');
+                aTag.setAttribute('data-name', imgName + '.mp4');
+                aTag.setAttribute('data-image', source[j].src);
+                aTag.setAttribute('class','download-btn');
+                aTag.onclick = function(e) {
+                  e.preventDefault();
+                  forceDownload(this);
+                }
+                var vidtag = document.createElement('video');
+                vidtag.setAttribute('src',source[j].src);
+                vidtag.setAttribute('controls', true)
+                vidtag.setAttribute('height', '150px');
+                aTag.appendChild(vidtag);
+                var br = document.createElement("br");
+                htag.appendChild(br);
+                var ptag = document.createElement('p');
+                var t = document.createTextNode("Download Video");
+                ptag.appendChild(t);
+                aTag.appendChild(ptag);
+                aTag.style.padding = "15px";
+                aTag.style.borderBottom = "1px solid #CCC";
+                aTag.style.marginBottom = "15px;";
+                downloadbox.appendChild(aTag);
+              }
+            }
+          }
+        }
       }
 
-      var tagsArr = document.querySelectorAll('article > div');
-      var tagsArr2 = document.querySelectorAll('article');
-      var tagsArr3 = document.querySelectorAll('section > div > div> section');
-      console.log(tagsArr3);
-      for (var i = 0, len = tagsArr2.length; i < len; i++) {
-        var img_div = tagsArr2[i].getElementsByTagName('img');
-        var video_div = tagsArr2[i].getElementsByTagName('video');
-      }
+      //Post and Video Download
       for (var i = 0, len = tagsArr2.length; i < len; i++) {
         var headertag = tagsArr2[i].getElementsByTagName('header');
         var img_div = tagsArr2[i].getElementsByTagName('img');
         var video_div = tagsArr2[i].getElementsByTagName('video');
         if(img_div.length > 0) {
-         for(var j = 0; j < img_div.length; j++) {
-           var parent = img_div[j].parentElement.nodeName;
-           console.log(img_div[j].parentElement.nodeName);
-           var imgName = (img_div[j].getAttribute('alt') != null) ? img_div[j].getAttribute('alt') : 'image' + j;
-           if(img_div[j].src != '' && ! in_array(img_div[j].src, download_btn_array)) {
-            download_btn_array.push(img_div[j].src)
-            var aTag = document.createElement('a');
-            aTag.setAttribute('href', '#!');
-            aTag.setAttribute('class', 'imgdownload');
-            aTag.setAttribute('data-name', imgName + '.jpg');
-            aTag.setAttribute('data-image', img_div[j].src);
-            aTag.onclick = function(e) {
-              e.preventDefault();
-              forceDownload(this);
+          for(var j = 0; j < img_div.length; j++) {
+            var parent = img_div[j].parentElement.nodeName;
+            var imgName = (img_div[j].getAttribute('alt') != null) ? img_div[j].getAttribute('alt') : 'image' + j;
+            if(img_div[j].src != '' && ! in_array(img_div[j].src, download_btn_array)) {
+              download_btn_array.push(img_div[j].src);
+              var aTag = document.createElement('a');
+              aTag.setAttribute('href', '#!');
+              aTag.setAttribute('class', 'imgdownload');
+              aTag.setAttribute('data-name', imgName + '.jpg');
+              aTag.setAttribute('data-image', img_div[j].src);
+              aTag.onclick = function(e) {
+                e.preventDefault();
+                forceDownload(this);
+              }
+              var downloadText = 'Download ' + imgName + '      ';
+              var t = document.createTextNode(downloadText);
+              aTag.appendChild(t);
+              var br = document.createElement("br");
+              aTag.appendChild(br);
+              aTag.style.marginBottom = "10px";
+              aTag.style.overflow = "hidden";
+              aTag.style.marginLeft = "auto";
+              aTag.style.marginRight = "auto";
+              aTag.style.width = "95%";
+              aTag.style.whiteSpace = "nowrap";
+              aTag.style.textOverflow = "ellipsis"
+              tagsArr2[i].appendChild(aTag);
+
+
+              var aTag = document.createElement('a');
+              aTag.setAttribute('href','#!');
+              aTag.setAttribute('data-name', imgName + '.jpg');
+              aTag.setAttribute('data-image', img_div[j].src);
+              aTag.setAttribute('class','download-btn');
+              aTag.onclick = function() {
+                forceDownload(this);
+              }
+              var imgtag = document.createElement('img');
+              imgtag.setAttribute('src',img_div[j].src);
+              imgtag.setAttribute('height', '150px');
+              aTag.appendChild(imgtag);
+              aTag.style.padding = "15px";
+              aTag.style.borderBottom = "1px solid #CCC";
+              aTag.style.marginBottom = "15px;";
+              downloadbox.appendChild(aTag);
             }
-            var downloadText = 'Download ' + imgName + '      ';
-            var t = document.createTextNode(downloadText);
-            aTag.appendChild(t);
-            var br = document.createElement("br");
-            aTag.appendChild(br);
-            aTag.style.marginBottom = "10px";
-            aTag.style.overflow = "hidden";
-            aTag.style.marginLeft = "auto";
-            aTag.style.marginRight = "auto";
-            aTag.style.width = "95%";
-            aTag.style.whiteSpace = "nowrap";
-            aTag.style.textOverflow = "ellipsis"
-            tagsArr2[i].appendChild(aTag);
-          //console.log(img_div[j].src);
-
-
-          var aTag = document.createElement('a');
-          aTag.setAttribute('href','#!');
-          aTag.setAttribute('data-name', imgName + '.jpg');
-          aTag.setAttribute('data-image', img_div[j].src);
-          aTag.setAttribute('class','download-btn');
-          tagsArr[i].appendChild(aTag);
-          aTag.onclick = function() {
-            forceDownload(this);
           }
-          var imgtag = document.createElement('img');
-          imgtag.setAttribute('src',img_div[j].src);
-          imgtag.setAttribute('height', '150px');
-          aTag.appendChild(imgtag);
-          aTag.style.padding = "15px";
-          aTag.style.borderBottom = "1px solid #CCC";
-          aTag.style.marginBottom = "15px;";
-          downloadbox.appendChild(aTag);
         }
-      }
-    }
 
-    if(video_div.length > 0) {
-       for(var j = 0; j < video_div.length; j++) {
-         var parent = video_div[j].parentElement.nodeName;
-         var imgName = (video_div[j].getAttribute('alt') != null) ? video_div[j].getAttribute('alt') : 'video' + j;
-         console.log(video_div[j].parentElement.nodeName);
-         if(video_div[j].src != '' && ! in_array(video_div[j].src, download_btn_array)) {
-          download_btn_array.push(video_div[j].src)
-          var aTag = document.createElement('a');
-          aTag.setAttribute('href', '#!');
-          aTag.setAttribute('class', 'videodownload');
-          aTag.setAttribute('data-name', imgName + '.mp4');
-          aTag.setAttribute('data-image', video_div[j].src);
-          aTag.onclick = function(e) {
-            e.preventDefault();
-            forceDownload(this);
+        if(video_div.length > 0) {
+          for(var j = 0; j < video_div.length; j++) {
+            var parent = video_div[j].parentElement.nodeName;
+            var imgName = (video_div[j].getAttribute('alt') != null) ? video_div[j].getAttribute('alt') : 'video' + j;
+            if(video_div[j].src != '' && ! in_array(video_div[j].src, download_btn_array)) {
+              download_btn_array.push(video_div[j].src)
+              var aTag = document.createElement('a');
+              aTag.setAttribute('href', '#!');
+              aTag.setAttribute('class', 'videodownload');
+              aTag.setAttribute('data-name', imgName + '.mp4');
+              aTag.setAttribute('data-image', video_div[j].src);
+              aTag.onclick = function(e) {
+                e.preventDefault();
+                forceDownload(this);
+              }
+              var downloadText = 'Download ' + imgName + '      ';
+              var t = document.createTextNode(downloadText);
+              aTag.appendChild(t);
+              var br = document.createElement("br");
+              aTag.appendChild(br);
+              aTag.style.marginBottom = "10px";
+              aTag.style.overflow = "hidden";
+              aTag.style.marginLeft = "auto";
+              aTag.style.marginRight = "auto";
+              aTag.style.width = "95%";
+              aTag.style.whiteSpace = "nowrap";
+              aTag.style.textOverflow = "ellipsis"
+              tagsArr2[i].appendChild(aTag);
+
+
+              var aTag = document.createElement('a');
+              aTag.setAttribute('href','#!');
+              aTag.setAttribute('data-name', imgName + '.mp4');
+              aTag.setAttribute('data-image', video_div[j].src);
+              aTag.setAttribute('class','download-btn');
+              aTag.onclick = function(e) {
+                e.preventDefault();
+                forceDownload(this);
+              }
+              var vidtag = document.createElement('video');
+              vidtag.setAttribute('src',video_div[j].src);
+              vidtag.setAttribute('controls', true)
+              vidtag.setAttribute('height', '150px');
+              aTag.appendChild(vidtag);
+              var br = document.createElement("br");
+              htag.appendChild(br);
+              var ptag = document.createElement('a');
+              var t = document.createTextNode("Download Video");
+              ptag.appendChild(t);
+              aTag.appendChild(ptag);
+              aTag.style.padding = "15px";
+              aTag.style.borderBottom = "1px solid #CCC";
+              aTag.style.marginBottom = "15px;";
+              downloadbox.appendChild(aTag);
+            }
           }
-          var downloadText = 'Download ' + imgName + '      ';
-          var t = document.createTextNode(downloadText);
-          aTag.appendChild(t);
-          var br = document.createElement("br");
-          aTag.appendChild(br);
-          aTag.style.marginBottom = "10px";
-          aTag.style.overflow = "hidden";
-          aTag.style.marginLeft = "auto";
-          aTag.style.marginRight = "auto";
-          aTag.style.width = "95%";
-          aTag.style.whiteSpace = "nowrap";
-          aTag.style.textOverflow = "ellipsis"
-          tagsArr2[i].appendChild(aTag);
-
-
-          var aTag = document.createElement('a');
-          aTag.setAttribute('href','#!');
-          aTag.setAttribute('data-name', imgName + '.mp4');
-          aTag.setAttribute('data-image', video_div[j].src);
-          aTag.setAttribute('class','download-btn');
-          tagsArr[i].appendChild(aTag);
-          aTag.onclick = function(e) {
-            e.preventDefault();
-            forceDownload(this);
-          }
-          var vidtag = document.createElement('video');
-          vidtag.setAttribute('src',video_div[j].src);
-          vidtag.setAttribute('controls', true)
-          vidtag.setAttribute('height', '150px');
-          aTag.appendChild(vidtag);
-          var ptag = document.createElement('a');
-          var t = document.createTextNode("Download Video");
-          ptag.appendChild(t);
-          aTag.appendChild(ptag);
-          aTag.style.padding = "15px";
-          aTag.style.borderBottom = "1px solid #CCC";
-          aTag.style.marginBottom = "15px;";
-          downloadbox.appendChild(aTag);
         }
+
       }
-    }
-
- }
 
 
-}, 5000);
+    }, 3000);
 }
 
 
