@@ -9,7 +9,6 @@
 		"default_icon": "icon.jpg",
 		"default_popup": "popup.html"
 	},
-	"update_url": "https://github.com/smjrifle/Insta-Download.git",
 	"content_scripts": [
 		{
 			"matches": ["https://www.instagram.com/*"],

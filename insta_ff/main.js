@@ -74,7 +74,9 @@ if(enabled_insta_download == 'Enable') {
   htag.appendChild(br);
   downloadbox.appendChild(htag2);
 
-  window.onload = function() {myVar = setInterval(function() {
+  window.onload = function() {
+
+    myVar = setInterval(function() {
     if(fetch == 0) {
       downloadbox.removeChild(htag2);
       fetch = 1;
@@ -97,14 +99,11 @@ if(enabled_insta_download == 'Enable') {
               storyimg_array.push(img_div[j].src);
 
               var aTag = document.createElement('a');
-              aTag.setAttribute('href', '#!');
+              aTag.setAttribute('href', img_div[j].src);
               aTag.setAttribute('class', 'imgdownload');
               aTag.setAttribute('data-name', imgName + '.jpg');
               aTag.setAttribute('data-image', img_div[j].src);
-              aTag.onclick = function(e) {
-                e.preventDefault();
-                forceDownload(this);
-              }
+             aTag.setAttribute('target', '_blank');
               var downloadText = 'Download ' + imgName + '      ';
               var t = document.createTextNode(downloadText);
               aTag.appendChild(t);
@@ -117,21 +116,19 @@ if(enabled_insta_download == 'Enable') {
               aTag.style.width = "95%";
               aTag.style.whiteSpace = "nowrap";
               aTag.style.textOverflow = "ellipsis";
-              aTag.style.top = "0";
+              aTag.style.top = "20%";
               aTag.style.left = "0";
-              aTag.style.position = "left";
-              aTag.style.color = "#FFF";
+              aTag.style.position = "absolute";
+              aTag.style.color = "#F00";
               tagsArr3[i].appendChild(aTag);
 
               var aTag = document.createElement('a');
-              aTag.setAttribute('href','#!');
+              aTag.setAttribute('href',img_div[j].src);
               aTag.setAttribute('data-name', imgName + '.jpg');
               aTag.setAttribute('data-image', img_div[j].src);
               aTag.setAttribute('class','download-btn');
               tagsArr3[i].appendChild(aTag);
-              aTag.onclick = function() {
-                forceDownload(this);
-              }
+              aTag.setAttribute('target', '_blank');
               var imgtag = document.createElement('img');
               imgtag.setAttribute('src',img_div[j].src);
               imgtag.setAttribute('height', '150px');
@@ -150,15 +147,12 @@ if(enabled_insta_download == 'Enable') {
                 storydownload_btn_array.push(source[j].src);
 
                 var aTag = document.createElement('a');
-                aTag.setAttribute('href', '#!');
+                aTag.setAttribute('href', source[j].src);
                 aTag.setAttribute('class', 'imgdownload');
-                aTag.setAttribute('data-name', imgName + '.jpg');
+                aTag.setAttribute('data-name', 'video.jpg');
                 aTag.setAttribute('data-image', source[j].src);
-                aTag.onclick = function(e) {
-                  e.preventDefault();
-                  forceDownload(this);
-                }
-                var downloadText = 'Download ' + imgName + '      ';
+                aTag.setAttribute('target', '_blank');
+                var downloadText = 'Download Video      ';
                 var t = document.createTextNode(downloadText);
                 aTag.appendChild(t);
                 var br = document.createElement("br");
@@ -170,21 +164,18 @@ if(enabled_insta_download == 'Enable') {
                 aTag.style.width = "95%";
                 aTag.style.whiteSpace = "nowrap";
                 aTag.style.textOverflow = "ellipsis";
-                aTag.style.top = "0";
+                aTag.style.top = "25%";
                 aTag.style.left = "0";
-                aTag.style.position = "left";
-                aTag.style.color = "#FFF";
+                aTag.style.position = "absolute";
+                aTag.style.color = "#F00";
                 tagsArr3[i].appendChild(aTag);
 
                 var aTag = document.createElement('a');
-                aTag.setAttribute('href','#!');
-                aTag.setAttribute('data-name', imgName + '.mp4');
+                aTag.setAttribute('href',source[j].src);
+                aTag.setAttribute('data-name', 'video.mp4');
                 aTag.setAttribute('data-image', source[j].src);
                 aTag.setAttribute('class','download-btn');
-                aTag.onclick = function(e) {
-                  e.preventDefault();
-                  forceDownload(this);
-                }
+                aTag.setAttribute('target', '_blank');
                 var vidtag = document.createElement('video');
                 vidtag.setAttribute('src',source[j].src);
                 vidtag.setAttribute('controls', true)
@@ -218,14 +209,11 @@ if(enabled_insta_download == 'Enable') {
             if(img_div[j].src != '' && ! in_array(img_div[j].src, download_btn_array)) {
               download_btn_array.push(img_div[j].src);
               var aTag = document.createElement('a');
-              aTag.setAttribute('href', '#!');
+              aTag.setAttribute('href', img_div[j].src);
               aTag.setAttribute('class', 'imgdownload');
               aTag.setAttribute('data-name', imgName + '.jpg');
               aTag.setAttribute('data-image', img_div[j].src);
-              aTag.onclick = function(e) {
-                e.preventDefault();
-                forceDownload(this);
-              }
+             aTag.setAttribute('target', '_blank');
               var downloadText = 'Download ' + imgName + '      ';
               var t = document.createTextNode(downloadText);
               aTag.appendChild(t);
@@ -242,13 +230,11 @@ if(enabled_insta_download == 'Enable') {
 
 
               var aTag = document.createElement('a');
-              aTag.setAttribute('href','#!');
+              aTag.setAttribute('href',img_div[j].src);
               aTag.setAttribute('data-name', imgName + '.jpg');
               aTag.setAttribute('data-image', img_div[j].src);
               aTag.setAttribute('class','download-btn');
-              aTag.onclick = function() {
-                forceDownload(this);
-              }
+              aTag.setAttribute('target', '_blank');
               var imgtag = document.createElement('img');
               imgtag.setAttribute('src',img_div[j].src);
               imgtag.setAttribute('height', '150px');
@@ -268,14 +254,11 @@ if(enabled_insta_download == 'Enable') {
             if(video_div[j].src != '' && ! in_array(video_div[j].src, download_btn_array)) {
               download_btn_array.push(video_div[j].src)
               var aTag = document.createElement('a');
-              aTag.setAttribute('href', '#!');
+              aTag.setAttribute('href', video_div[j].src);
               aTag.setAttribute('class', 'videodownload');
               aTag.setAttribute('data-name', imgName + '.mp4');
               aTag.setAttribute('data-image', video_div[j].src);
-              aTag.onclick = function(e) {
-                e.preventDefault();
-                forceDownload(this);
-              }
+              aTag.setAttribute('target', '_blank');
               var downloadText = 'Download ' + imgName + '      ';
               var t = document.createTextNode(downloadText);
               aTag.appendChild(t);
@@ -292,14 +275,11 @@ if(enabled_insta_download == 'Enable') {
 
 
               var aTag = document.createElement('a');
-              aTag.setAttribute('href','#!');
+              aTag.setAttribute('href',video_div[j].src);
               aTag.setAttribute('data-name', imgName + '.mp4');
               aTag.setAttribute('data-image', video_div[j].src);
               aTag.setAttribute('class','download-btn');
-              aTag.onclick = function(e) {
-                e.preventDefault();
-                forceDownload(this);
-              }
+              aTag.setAttribute('target', '_blank');
               var vidtag = document.createElement('video');
               vidtag.setAttribute('src',video_div[j].src);
               vidtag.setAttribute('controls', true)
@@ -342,25 +322,4 @@ function enable_disable_fn(status) {
   console.log('Onclick' + status);
   localStorage["enabled_insta_download"] = status;
   location.reload();
-}
-
-function forceDownload(link){
-  var url = link.getAttribute("data-image");
-  var fileName = link.getAttribute("data-name");
-  if(fileName == null) {fileName = 'instaImage';}
-  console.log(fileName);
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", url, true);
-  xhr.responseType = "blob";
-  xhr.onload = function(){
-    var urlCreator = window.URL || window.webkitURL;
-    var imageUrl = urlCreator.createObjectURL(this.response);
-    var tag = document.createElement('a');
-    tag.href = imageUrl;
-    tag.download = fileName;
-    document.body.appendChild(tag);
-    tag.click();
-    document.body.removeChild(tag);
-  }
-  xhr.send();
 }
